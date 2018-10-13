@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const compression = require('compression');
+const serviceIP = process.env.SERVICE_IP || 'failure';
 
 const server = express();
 server.use(compression())
@@ -12,9 +13,10 @@ server.use(express.urlencoded({extended: true}));
 server.use(express.static(path.join(__dirname, './'), { maxAge: '30 days' }));
 server.use(cors());
 
+
 // Albums & Player
 server.get('/artists/albums/:artistID', (req, res) => {
-  res.redirect('http://' + process.env.SERVICE_IP + req.url);
+  res.redirect('http://' + serviceIP + req.url);
 });
 
 // Related Artists
